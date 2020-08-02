@@ -1,0 +1,104 @@
+recherche.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div>
+<form action="ServletPerson" method="GET">
+<div class="form-group">
+    <label for="fage">Saisissez le nom de la personne</label>
+    <input type="text" class="form-control" id="fname" placeholder="your name" name="name">
+  </div>
+ 
+ <button type="submit" class="btn btn-success">rechercher</button>
+</form>
+</div>
+  <c:if test="${recherche}">
+<table class="table table-hover" >
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+  <c:forEach items="${listeRechercher}" var="perso">
+<tr>
+<th scope="row"><c:out value="${perso.id}"></c:out></th>
+<td><c:out value="${perso.name}"></c:out></td>
+<td><c:out value="${perso.age}"></c:out></td>
+
+</tr>
+</c:forEach>
+  
+  </tbody>
+</table>
+</c:if>  
+
+</body>
+</html>
+
+
+ServletPerson
+
+package com.poly.info.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.poly.info.service.PersonServiceImpl;
+
+/**
+ * Servlet implementation class ServletPerson
+ */
+@WebServlet("/ServletPerson")
+public class ServletPerson extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ServletPerson() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		PersonServiceImpl P = new PersonServiceImpl();
+		request.setAttribute("listeRechercher", P.getPersonByName(request.getParameter("name")));
+		request.setAttribute("recherche", true);
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/recherche.jsp");
+		rd.forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

@@ -1,0 +1,102 @@
+****************recherche.jsp******************************************
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
+<title>Insert title here</title>
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<p></p>
+<div class="container">
+<div class="card">
+<div class="card-header">
+Recherche des Personnes
+</div>
+<div class="card-body">
+<form action="ServletAffiche" method="POST">
+<label>Name</label>
+<input type="text" name="name" value="${p.name}" />
+<button type="submit" class="btn btn-primary">Chercher</button>
+</form>
+<table class="table table-striped">
+<tr>
+<th>ID</th><th>Name</th><th>Age</th>
+</tr>
+
+<tr>
+<td>${p.id}</td>
+<td>${p.name}</td>
+<td>${p.age}</td>
+</tr>
+
+</table>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+
+****************ServletAffiche.java******************************************
+
+package com.poly.info.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.poly.info.model.Person;
+import com.poly.info.service.PersonServiceImpl;
+
+/**
+ * Servlet implementation class ServletAffiche
+ */
+@WebServlet("/ServletAffiche")
+public class ServletAffiche extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ServletAffiche() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		PersonServiceImpl P = new PersonServiceImpl();
+		
+		request.setAttribute("p",P.getPersonByName(request.getParameter("name")));
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/recherche.jsp");
+		rd.forward(request,response);
+		
+	}
+
+}

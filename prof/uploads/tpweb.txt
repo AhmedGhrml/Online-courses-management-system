@@ -1,0 +1,62 @@
+<?php
+$nom=$_POST['nom'];
+$matricule=$_POST['matricule'];
+$Mot =$_POST['password'];
+$date =$_POST['date'];
+$Email =$_POST['email'];
+$adresse  =$_POST['URL'];
+$obligatoire =$_POST['co'];
+$seule=$_POST['cls'];
+//$desactivé=$_POST['cd'];
+$caché=$_POST['cc'];
+$Genre=$_POST['genre'];
+$Villes=$_POST['villes'];
+$Musiques=$_POST['menu'];
+$Villes=implode(',',$Villes);
+if($Villes==null)
+{
+    $Villes="pas de villes visitée";
+}
+settype($Villes,"String");
+
+$Musiques= implode(',', $Musiques);
+$Commentaires=$_POST['text'];
+//$Commentaires= implode(',', $Commentaires);
+settype($Musiques, "String");
+settype($Commentaires, "String");
+if ($Genre=="1")
+{
+settype($Genre,"String");
+$Genre="Masculin";
+
+}
+else
+{
+settype($Genre,"String");
+$Genre="Feminin";
+}
+$tab=array(
+array("Nom",$nom),
+array("Matricule",$matricule),
+array("Mot de passe",$Mot),
+array("date de naissance",$date),
+array("Email",$Email),
+array("adresse",$adresse),
+array("obligatoire",$obligatoire),
+array("seule",$seule),
+array("caché",$caché),
+array("Genre",$Genre),
+array("Villes",$Villes),
+array("Musiques",$Musiques),
+array("Commentaires",$Commentaires));
+echo('<table style="border-collapse: collapse; width:35%; margin-left:35%;">');
+for($i=0;$i<count($tab);$i++){
+    echo('<tr>');
+        echo('<td style="border: 2px crimson solid">'.$tab[$i][0].': </td>');
+        echo('<td style="border: 2px crimson solid">'.$tab[$i][1].'</td>');
+    echo('</tr>');
+}
+echo ('</table>');
+
+
+?>

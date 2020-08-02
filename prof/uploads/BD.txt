@@ -1,0 +1,82 @@
+5/
+
+declare 
+j number(10);
+jour varchar(10);
+m number(10);
+mois varchar(10);
+begin 
+select to_char(SYSDATE,'DD') into j from dual;
+if j=1 then
+jour:='lundi';
+elsif j=2 then
+jour:='mardi';
+elsif j=3 then
+jour:='mercredi';
+elsif j=4 then
+jour:='jeudi';
+elsif j=5 then
+jour:='vendredi';
+elsif j=6 then
+jour:='samedi';
+elsif j=7 then
+jour:='dimanche';
+end if;
+select to_char(SYSDATE,'MM') into m from dual;
+if m=1 then
+mois:='janvier';
+elsif m=2 then
+mois:='fevrier';
+elsif m=3 then
+mois:='mars';
+elsif m=4 then
+mois:='avril';
+elsif m=5 then
+mois:='mai';
+elsif m=6 then
+mois:='juin';
+elsif m=7 then
+mois:='juillet';
+elsif m=8 then
+mois:='aout';
+elsif m=9 then
+mois:='septembre';
+elsif m=10 then
+mois:='octobre';
+elsif m=11 then
+mois:='novembre';
+elsif m=12 then
+mois:='decembre';
+end if;
+DBMS_OUTPUT.PUT_LINE('Aujourdhui est' ||jour ,to_char(sysdate,'DD'),mois,to_char(sysdate,'YYYY')) ;
+END;
+/ 
+
+**********************************************************************************************************************
+6/
+declare
+nbr number(3) ;
+norepp number(20) ;
+novv number(20) ;
+nogg number(20) ;
+typerepp varchar(12) ;
+pxx number(20) ;
+kmcptt number(20) ;
+begin
+norepp := &norepp;
+novv := &novv;
+nogg := &nogg;
+typerepp := &typerepp;
+pxx := &pxx;
+kmcptt := &kmcptt;
+select count(novv) into nbr
+from voiture
+ where nov=novv;
+if nbr =1 then
+insert into reparation values(norepp, novv, nogg, typerepp, pxx, kmcptt );
+dbms_output.put_line(norepp) ;
+else
+dbms_output.put_line('Ce numero de voiture n existe');
+end if;
+end; 
+/

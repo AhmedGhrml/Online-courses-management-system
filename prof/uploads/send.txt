@@ -1,0 +1,50 @@
+<?php
+session_start();
+include('connection.php');
+$date_message = date('Y-m-d-H:i:s');
+$msg=$_POST['texte'];
+//$id_pseudo = $_POST['id_pseudo'];
+$id=$_GET['id'];
+  //header("location:acceuil.php?id=".$id."'");
+ 
+                
+if(isset($_SESSION['id'])){
+ 
+         $verif_user="SELECT id_pseudo FROM tchat WHERE id_pseudo = '$id'";
+         $res=mysqli_query($connect,$verif_user);
+         
+ 
+      
+$idd=$_SESSION['id'];
+ 
+         
+            $sql = "INSERT INTO tchat (id_pseudo,message,date_message) VALUES ('$idd','$msg','$date_message')";
+            mysqli_query($connect,$sql);
+         
+      
+
+         $lastID = $connect->query("SELECT id FROM tchat WHERE id_pseudo = '$idd' ORDER BY date_message DESC LIMIT 1", 
+         );
+ 
+            //$lastID = $lastID->fetch();
+ 
+            //$date_message = date_create($date_message);
+            //$date_message = date_format($date_message, 'd M Y à H:i:s');
+ 
+            ?>
+<a href='acceuil.php?id= <?php $idd;?>'>acceuil</a>
+            <div style="float: right;width: auto; max-width: 80%; margin-right: 26px;position: relative;padding: 7px 20px;color: #fff;background: #0B93F6;border-radius: 5px;margin-bottom: 15px; clear: both"><span id="<?= $lastID['id'] ?>"><?= nl2br($mess) ?></span>               
+                  <div style="font-size: 10px; text-align: right; margin-top: 10px">Par <?= $_SESSION['pseudo'] ?>, le <?= $date_message ?></div></div>
+ 
+               <script>document.getElementById('msg').scrollTop = document.getElementById('msg').scrollHeight;
+               
+               </script>
+               
+               <!--<script>window.location.href='acceuil.php?id';</script>!-->
+               ");<?php
+
+         }
+     
+      
+
+?>
